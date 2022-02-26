@@ -41,7 +41,7 @@ func main() {
 	// 2.map返回键和值；
 	// 3.通道（channel）只返回通道内的值
 
-	// 例1：
+	// 例：
 	str := "hello沙河"
 	for n, m := range str {
 		fmt.Printf("%d %c\n", n, m) // 这里的%c根据码值格式化输出为对应的字符
