@@ -1,4 +1,4 @@
-package main
+package go_type
 
 import (
 	"fmt"

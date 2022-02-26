@@ -1,4 +1,4 @@
-package main
+package type_change
 
 import (
 	"fmt"

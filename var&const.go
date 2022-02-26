@@ -1,4 +1,4 @@
-package main
+package var_const
 
 import "fmt"
 
