@@ -2,6 +2,7 @@ package go_slice
 
 import "fmt"
 
+// 引用类型：特指slice、map、channel这三种预定义类型
 //slice
 //data不一定指向底层数组的起始位置
 //[]int底层就是int类型底层数组，[]string底层就是string类型底层数组
