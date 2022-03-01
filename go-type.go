@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-// 当变量初始化时，如没赋予变量一个初始值，则变量使用默认值
+// 当变量没初始化，则变量使用类型的默认零值
 
 // 整型：
 // 有符号int (有正负，范围：-(2^(n-1))至2^(n-1)-1)
@@ -16,7 +16,7 @@ import (
 // float32：浮点数的最大范围为3.4e38
 // float64：浮点数的最大范围为1.8e308
 
-// 整型变量和浮点型变量的默认值为0
+// 整型变量和浮点型变量的默认零值为0
 var a int
 var b int8 = -4
 var c uint64 = 12
@@ -25,12 +25,12 @@ var e float32
 var f float64 = 16.1
 
 // 布尔类型
-// 布尔型变量默认值为false
+// 布尔型变量默认零值为false
 var m bool
 var x, y = false, true
 
 // string类型
-// string类型变量的默认值为空字符串
+// string类型变量的默认零值为空字符串
 var s string
 var s1 = "hello_world"
 
