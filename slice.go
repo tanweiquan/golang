@@ -35,9 +35,14 @@ func main() {
 	ps := new([]string) //data=nil,len=0,cap=0,此时ps就是一个地址。此时这个slice还没有底层数组
 	//此时可以通过append给ps分配底层数组
 	*ps = append(*ps, "eggo") //此时[]string的data(string)=eggo,len(byte)=4
-
+	// 关联底层数组
+	arr := [10]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	var s1 []int = arr[:]
+	var s2 []int = arr[0:6]
 	//打印值
 	fmt.Println(a)
 	fmt.Println(b)
 	fmt.Println(ps)
+	fmt.Println(s1)
+	fmt.Println(s2)
 }
