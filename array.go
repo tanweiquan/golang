@@ -42,7 +42,7 @@ func main() {
 	for i, v := range a {
 		fmt.Println(i, v)
 	}
-	// 多维数组的遍历
+	// 多维数组的遍历,使用for i,v := range 数组{}遍历
 	for i1, v1 := range n {
 		fmt.Printf("第一层数组的索引为%v---值%v\n", i1, v1)
 		for i2, v2 := range v1 {
