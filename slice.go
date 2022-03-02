@@ -1,6 +1,9 @@
 package go_slice
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 // 引用类型：特指slice、map、channel这三种预定义类型
 //slice
@@ -35,14 +38,24 @@ func main() {
 	ps := new([]string) //data=nil,len=0,cap=0,此时ps就是一个地址。此时这个slice还没有底层数组
 	//此时可以通过append给ps分配底层数组
 	*ps = append(*ps, "eggo") //此时[]string的data(string)=eggo,len(byte)=4
+
 	// 关联底层数组
 	arr := [10]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 	var s1 []int = arr[:]
 	var s2 []int = arr[0:6]
+
+	// 使用copy复制切片，表达式：copy(切片name,被复制的切片)
+	m := make([]int, 6, 7)
+	copy(m, b)
+	// 切片的排序
+	var h1 = []int{1, 6, 9, 2, 3, 8}
+	sort.Ints(h1[:]) //对切片里的元素进行排序
+	fmt.Println(h1)  //[1 2 3 6 8 9]
 	//打印值
 	fmt.Println(a)
 	fmt.Println(b)
 	fmt.Println(ps)
 	fmt.Println(s1)
 	fmt.Println(s2)
+	fmt.Println(m)
 }
