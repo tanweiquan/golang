@@ -52,4 +52,20 @@ func main() {
 	flag.Parse()                         // 解析命令行
 	vm := *m
 	fmt.Println(vm)
+
+	// 使用指向源变量的指针，来修改指针所指向的源变量的值
+	type hhh struct {
+		a string
+		b int
+	}
+	aaa := hhh{ // 创建一个名为aaa的对象（值传递，即对对象的一次拷贝）
+		a: "hello",
+		b: 16,
+	}
+	xx := aaa        // 值拷贝，修改xx不影响aaa
+	xx.b = 18        // 只改变了xx里的b，不影响aaa的b
+	yy := &aaa       // 定义一个指向aaa的指针yy，修改yy的值会影响aaa
+	(*yy).a = "bye"  // 语法糖为：yy.a="bye"
+	fmt.Println(aaa) // {bye 16}
+
 }
