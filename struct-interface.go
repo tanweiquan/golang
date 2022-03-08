@@ -1,4 +1,4 @@
-package main
+package struct_interface
 
 import "fmt"
 
@@ -82,4 +82,10 @@ func main() {
 	a.Eat()
 	r.Speak()
 	r.Eat()
+
+	// 当对象都实现了接口中的方法时，对象也属于接口类型了
+	var c Human
+	c = r
+	c.Speak()
+	c.Eat()
 }
