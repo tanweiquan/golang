@@ -1,4 +1,4 @@
-package struct_interface
+package main
 
 import "fmt"
 
@@ -28,7 +28,7 @@ func (c *Chinese) GetSkin() string {
 	return "黄皮肤"
 }
 
-// 多态：使用interface来实现(可以通过对象访问对象里的字段，同时可以调用对象绑定的方法)
+// 多态：使用interface来实现 (对象类型不同时，调用相同方法，可能执行不同函数)
 // 关联interface的结构体(类)要实现interface里的所有方法
 /*
 type 接口名 interface{
@@ -41,7 +41,7 @@ type Human interface {
 	Speak()
 	Eat()
 }
-type American struct {
+type American struct { //定义对象类型American
 	name     string
 	Language string
 	food     string
@@ -53,15 +53,33 @@ func (a *American) Speak() {
 func (a *American) Eat() {
 	fmt.Println("美国人" + a.name + "吃" + a.food)
 }
+
+type Russian struct { //定义对象类型Russian
+	name     string
+	Language string
+	food     string
+}
+
+func (a *Russian) Speak() {
+	fmt.Println("俄罗斯人" + "说" + "要打美国人")
+}
+func (a *Russian) Eat() {
+	fmt.Println("俄罗斯人" + "吃" + "什么？")
+}
 func main() {
+	// 这里就看出了多态的，不同的对象类型，调用相同方法，执行的是不同函数
 	a := &American{
 		"jieli",
 		"English",
 		"汉堡",
 	}
+	r := &Russian{
+		"达瓦",
+		"Russian",
+		"红肠",
+	}
 	a.Speak()
 	a.Eat()
-	fmt.Println(a.name)
-	fmt.Println(a.Language)
-	fmt.Println(a.food)
+	r.Speak()
+	r.Eat()
 }
