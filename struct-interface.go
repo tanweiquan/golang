@@ -28,8 +28,8 @@ func (c *Chinese) GetSkin() string {
 	return "黄皮肤"
 }
 
-// 多态：使用interface来实现 (对象类型不同时，调用相同方法，可能执行不同函数)
-// 关联interface的结构体(类)要实现interface里的所有方法
+// 多态：使用interface来实现 (对象类型不同时，调用相同方法，可能实现不同的功能)
+// 实现接口interface：将对象类型不同而能实现不同功能的同名方法，放在接口interface里；接口名自定义即可，不影响程序。
 /*
 type 接口名 interface{
 	方法名1(参数1，参数2...)(返回值1，返回值2...)
