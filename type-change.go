@@ -50,4 +50,19 @@ func main() {
 	fs2, _ := strconv.ParseFloat(fu2, 64) // 64表示这个小数是float64
 	fs3, _ := strconv.ParseBool(fu3)
 	fmt.Println(fs1, fs2, fs3)
+	// 类型推断
+	i := 6
+	x := interface{}(i) // 使用x.(type)前一定要转换为interface{}类型
+	switch x.(type) {
+	case int:
+		fmt.Println("int")
+	case string:
+		fmt.Println("string")
+	default:
+		fmt.Println("不合法")
+	}
+	xtype, ok := x.(int)
+	fmt.Println("i的值为：", xtype)
+	fmt.Println("i的类型是int,对还是错", ok)
+
 }
