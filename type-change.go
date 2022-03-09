@@ -5,6 +5,9 @@ import (
 	"strconv"
 )
 
+// 不同类型的变量不能相互赋值
+// var i int = 9;type myint int;var a myint;这里是自定义类型，i不能赋值给a
+// var i int = 9;type myint = int;var a myint;a=i;这里是类型别名，可以相互赋值
 func main() {
 
 	s := "hello,小溪"
