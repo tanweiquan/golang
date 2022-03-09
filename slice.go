@@ -6,7 +6,8 @@ import (
 )
 
 // 引用类型：特指slice、map、channel这三种预定义类型
-//slice
+// slice
+// slice类型是不能比较的，例如有a:=make([]int,2,3)和b:=make([]int,2,3)，a==b是错误的，因为a和b都是slice类型，两者不能比较
 //data不一定指向底层数组的起始位置
 //[]int底层就是int类型底层数组，[]string底层就是string类型底层数组
 //[]int的data指向底层int类型数组，len指向数组元素个数

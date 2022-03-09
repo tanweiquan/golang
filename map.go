@@ -3,7 +3,7 @@ package go_map
 import "fmt"
 
 // 引用类型：特指slice、map、channel这三种预定义类型
-
+// map类型不能比较的，例如：map[string]string==map[string]string是错误的，尽管两种相同，但两者都是map类型，不能比较
 // go语言中提供的映射关系的容器为map，其内部使用散列表(hash)实现的
 // map是一种无序的基于key-value的数据结构，go语言中的map是引用类型，必须初始化才能使用
 // 语法：map[KeyType]ValueType，其中KeyType表示键的类型，ValueType表示键对应的值的类型
