@@ -48,6 +48,7 @@ type American struct { //定义对象类型American
 	food     string
 }
 
+// 引用结构体的方法，引用传递，会改变原有结构体的值
 func (a *American) Speak() {
 	fmt.Println("美国人" + a.name + "说" + a.Language)
 }
@@ -61,10 +62,11 @@ type Russian struct { //定义对象类型Russian
 	food     string
 }
 
-func (a *Russian) Speak() {
+// 值结构体的方法，值传递，不会改变原有结构体的值
+func (a Russian) Speak() {
 	fmt.Println("俄罗斯人" + "说" + "要打美国人")
 }
-func (a *Russian) Eat() {
+func (a Russian) Eat() {
 	fmt.Println("俄罗斯人" + "吃" + "什么？")
 }
 func main() {
