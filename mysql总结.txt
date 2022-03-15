@@ -1,0 +1,76 @@
+mysql启动与停止：
+windows：
+             net start mysql80
+             net stop mysql80
+mysql客户端连接：
+             mysql [-h 127.0.0.1] [-P 3306] -u root -p
+windows：mysql -u root -p
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+DDL：定义数据库，表，字段
+数据库：
+         查询所有数据库： show databases;
+         查询当前数据库： select database();
+         创建数据库：        create datebase 数据库名;   ---->create database [ if not exists ] 数据库名 [ default charset 字符集 ] [ collate 排序规则 ];
+         删除数据库：        drop database 数据库名;    ---->drop database [ if exists ] 数据库名;
+         使用数据库：        use 数据库名;
+例子：create  database  if  not  exists  class_teacher  default  charset  utf8mb4;
+
+表：
+         查询当前数据库所有表：show tables;
+         查询表结构：                desc 表名;
+         查询指定表的建表语句：show create table 表名;
+         创建表：
+            create table 表名(
+                       字段1 字段1类型 [约束(约束条件)] [ comment 字段1注释 ],
+                       字段1 字段2类型 [约束(约束条件)] [ comment 字段2注释 ],
+                       字段1 字段3类型 [约束(约束条件)] [ comment 字段3注释 ],
+                        。。。
+                       字段n 字段n类型 [约束(约束条件)] [ comment 字段n注释 ]
+            )[ comment 表注释 ];      
+          给表添加字段：              alter table 表名    add        字段名  类型(长度)   [ 约束(约束条件) ] [ comment 注释 ];
+          修改字段的数据类型：    alter table 表名   modify    字段名  新数据类型(长度);
+          修改字段名和数据类型： alter table 表名   change    旧字段名 新字段名  类型(长度) [ 约束(约束条件) ] [ comment 注释 ];
+          删除表中字段：              alter table 表名     drop      字段名;
+          修改表名：                    alter table 表名  rename to 新表名;
+          删除表：                       drop table [ if exists ]  表名;
+          删除指定表，并重新创建该表：truncate table 表名;
+例子：
+            create table teacher_user(                                               
+                       id  int comment '编号',                                    
+                       name varchar(50)  comment '姓名',                  
+                       age int comment '年龄',
+                       gender varchar(1)  comment '性别'
+            ) comment '用户表';  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+DML：对表中的记录进行：增、删、改 （insert、update、delete）
+增加：
+             给指定字段添加值：   insert into 表名(字段名1，字段名2，。。。)    values(值1，值2，。。。);
+             给全部字段添加值：   insert into 表名     values(值1，值2，。。。);
+             给指定字段添加值：   insert into 表名(字段名1，字段名2,。。。)     values(值1，值2,。。。),(值1，值2,。。。)。。。;
+             给全部字段添加值：   insert into 表名   values(值1，值2，。。。)，(值1，值2，。。。)。。。;   --->前面的(值1，值2，。。。)对应字段1
+修改：   update 表名  set  字段1=值1,字段2=值2,。。。[ where 条件 ];
+删除：   删除某行数据：delete from 表名 [where 条件]; 
+
+例子：
+            insert   into  techer_user( id,name,age,gender)   values(1,'hellokitty',26,'女');
+            update techer_user set name='laoyuxiao' where id=1;
+            delete from  techer_user where id=1;   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+DQL：对表进行：查
+
+
+
+DCL普通开发人员知道就行，不用记：
+1、用户管理：
+创建用户：create user '用户名'@'主机名（即用户主机地址）' identified by '密码';
+修改用户密码：alter user '用户名'@'主机名' identified with mysql_native_password by '密码';
+删除用户：drop user '用户名'@'主机名';
+2、权限控制：（在mysql中的user表）
+给某用户增加某表的某个操作权限：grant 权限列表 on 数据库.表名 to '用户名'@'主机名';
+给某用户删除某表的某个操作权限：revoke 权限列表 on 数据库.表名 from '用户名'@'主机名';
+例子：
+     建用户：                  create user 'kaipingren'@'127.0.0.1' identified by 'qq127468';
+     设置用户权限：         grant select on jiangmen.kaiping to 'kaipingren'@'127.0.0.1';
