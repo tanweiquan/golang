@@ -42,19 +42,24 @@ DDL：定义数据库，表，字段
                         。。。
                        字段n 字段n类型 [约束(约束条件)] [ comment 字段n注释 ]
             )[ comment 表注释 ];      
-约束：primary key :主键
+约束：可搭配使用（直接在后面加上即可）
+          primary key :主键 （自增：auto_increment）
           foreign key :外键
           unique:       唯一约束（保证值不重复）
           check:         检查约束（保证值按照条件存储）
           not null:       非空约束（保证值不是空）
           default:        默认约束（当没有值时使用默认值,如default '1'）
+
           给表添加字段：              alter table 表名    add        字段名  类型(长度)   [ 约束(约束条件) ] [ comment 注释 ];
           修改字段的数据类型：    alter table 表名   modify    字段名  新数据类型(长度);
           修改字段名和数据类型： alter table 表名   change    旧字段名 新字段名  类型(长度) [ 约束(约束条件) ] [ comment 注释 ];
-          删除表中字段：              alter table 表名     drop      字段名;
-          修改表名：                    alter table 表名  rename to 新表名;
+          给字段添加外键：           alter table 表名 add constraint  外键名称  foreign key (外键字段名)  references  主表列名;
+          删除外键：                     alter table 表名 drop foreign key 外键名称;
+          删除表中字段：              alter table 表名     drop        字段名;
+          修改表名：                    alter table 表名  rename to   新表名;
           删除表：                       drop table [ if exists ]  表名;
           删除指定表，并重新创建该表：truncate table 表名;
+       
 例子：
             create table teacher_user(                                               
                        id  int comment '编号',                                    
@@ -78,8 +83,9 @@ DML：对表中的记录进行：增、删、改 （insert、update、delete）
             update techer_user set name='laoyuxiao' where id=1;
             delete from  techer_user where id=1;   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-DQL：对表进行：查
+DQL：查
+单表查询：
+对单表进行查：
 语法：     
               select    字段列表
                            from    表名列表
@@ -98,6 +104,48 @@ DQL：对表进行：查
      	 条件查询：select  字段列表  from  表名  where  条件列表；
      	 统计表中列的值：select  聚合函数(字段列表)  from  表名;     
 注意：count为列中的总记录数、min/max分别为该列的值的最大值和最小值、avg为该列的值的平均值、sum为该列的值的和
-           
+例子：
+        select  count  name  from  user;
+        select  name  as  '人名'  from  user;
 
+多表关系：
+            一对一：设置主表外键foreign key时，再设置其是唯一约束 unique             （用户与用户详情）
+            一对多：在多的一方建立外键，指向一的一方主键                                       （一个部门有多个员工）
+            多对多：建立第三张中间表，中间表至少包含两个外键，分别关联两方主键    （一个人学生可选择多门课，课可以被多个学生选择）
+
+笛卡尔积：在多表查询时，查询结果是表1x表2的组合
+                   消除笛卡尔积：select  *  from  表1, 表2  where  表1的字段=表2的字段;   ---->两个表是通过该字段连接在一起
+多表查询的分类：1、连接查询  2、子查询
+1、连接查询：
+内连接：查询多表相互交集的部分数据
+                  隐式内连接：select  字段列表  from  表1,表2,。。。where 条件列表;   ------>条件列表可以是表1字段=表2字段
+                  显式内连接：select  字段列表  from  表1  join  表2  on  条件列表;    ------>条件列表可以是表1字段=表2字段
+外连接：
+左外连接：查询左表所有数据，以及两表交集部分数据
+                 select  字段列表  from  左表  left  join  右表  on  条件列表; ------>条件列表可以是表1字段=表2字段
+
+右外连接：查询右表所有数据，以及两表交集部分数据
+                 select  字段列表  from  左表  right  join  右表  on  条件列表; ------>条件列表可以是表1字段=表2字段
+
+自连接：当前表与自身的连接查询，自连接必须使用表的别名
+                 select  字段列表  from  表x  别名A  表x  别名B  where 条件列表;     ------>条件列表可以是表1字段=表2字段
+                 select  字段列表  from  表x  别名A  join  表x  别名B   on  条件列表;   ------>条件列表可以是表1字段=表2字段
+联合查询（将多次查询的结果合并起来形成一个新的查询结果集）：
+                  select  字段列表  from  表A ...  
+                  union [all]                                                   ----->有all就不会去重复
+                  select  字段列表 from 表B...;
+注意：联合查询要保证两个分别查询的返回结果的字段列数和字段类型要一致
+例子：
+          select  a.name,  b.name  from  user a,  user b  where   a.menyid=b.yesid
+          select * from user where id<2  union  select * from user where id>11;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+使用函数（实际使用时，参数为字段+其他）
+
+select  函数(参数)  from 表名;
+update 表名  set 字段1=函数(参数);
+字符串函数、数值函数、日期函数、流程函数	
+
+例子：
+          select  name  datediff(curdate(),entrydate)  from  user;
 
