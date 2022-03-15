@@ -7,6 +7,19 @@ mysql客户端连接：
 windows：mysql -u root -p
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+DCL普通开发人员知道就行，不用记：
+1、用户管理：
+创建用户：create user '用户名'@'主机名（即用户主机地址）' identified by '密码';
+修改用户密码：alter user '用户名'@'主机名' identified with mysql_native_password by '密码';
+删除用户：drop user '用户名'@'主机名';
+2、权限控制：（在mysql中的user表）
+给某用户增加某表的某个操作权限：grant 权限列表 on 数据库.表名 to '用户名'@'主机名';
+给某用户删除某表的某个操作权限：revoke 权限列表 on 数据库.表名 from '用户名'@'主机名';
+例子：
+     建用户：                  create user 'kaipingren'@'127.0.0.1' identified by 'qq127468';
+     设置用户权限：         grant select on jiangmen.kaiping to 'kaipingren'@'127.0.0.1';
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 DDL：定义数据库，表，字段
 数据库：
          查询所有数据库： show databases;
@@ -60,17 +73,24 @@ DML：对表中的记录进行：增、删、改 （insert、update、delete）
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 DQL：对表进行：查
+语法：     
+              select    字段列表
+                           from    表名列表
+                                       where  条件列表 
+                                                   group by  分组字段列表
+                                                                   having  分组后条件列表
+                                                                                order by  排序字段列表 [asc升序 desc降序]
+                                                                                               limit  分页参数；
+注意：该语句执行时的顺序是从where开始执行，而select在分组条件后，排序前执行
+
+例子：从user表中找到id大于6且按年龄分组后性别全为男的员工组，然后选择员工年龄升序排序，年龄相同的按id降序排序，然后再跳过20条数据后的前2条数据查询
+          select  name from user where id>6 group by age having gender='男' order by age asc,id desc limit 20,2;
+
+	 设置字段别名：select  字段1  as 别名1，字段2  as 别名2  from  表名;
+      	 去除重复：select   distinct   字段列表  from  表名;
+     	 条件查询：select  字段列表  from  表名  where  条件列表；
+     	 统计表中列的值：select  聚合函数(字段列表)  from  表名;     
+注意：count为列中的总记录数、min/max分别为该列的值的最大值和最小值、avg为该列的值的平均值、sum为该列的值的和
+           
 
 
-
-DCL普通开发人员知道就行，不用记：
-1、用户管理：
-创建用户：create user '用户名'@'主机名（即用户主机地址）' identified by '密码';
-修改用户密码：alter user '用户名'@'主机名' identified with mysql_native_password by '密码';
-删除用户：drop user '用户名'@'主机名';
-2、权限控制：（在mysql中的user表）
-给某用户增加某表的某个操作权限：grant 权限列表 on 数据库.表名 to '用户名'@'主机名';
-给某用户删除某表的某个操作权限：revoke 权限列表 on 数据库.表名 from '用户名'@'主机名';
-例子：
-     建用户：                  create user 'kaipingren'@'127.0.0.1' identified by 'qq127468';
-     设置用户权限：         grant select on jiangmen.kaiping to 'kaipingren'@'127.0.0.1';
