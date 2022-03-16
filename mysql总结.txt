@@ -82,6 +82,7 @@ DML：对表中的记录进行：增、删、改 （insert、update、delete）
             insert   into  techer_user( id,name,age,gender)   values(1,'hellokitty',26,'女');
             update techer_user set name='laoyuxiao' where id=1;
             delete from  techer_user where id=1;   
+            update user  age = 16  where  name = '张三';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 DQL：查
 单表查询：
@@ -138,6 +139,25 @@ DQL：查
 例子：
           select  a.name,  b.name  from  user a,  user b  where   a.menyid=b.yesid
           select * from user where id<2  union  select * from user where id>11;
+
+2、子查询：sql语句(insert/update/delete/select)中嵌套select语句，称为子查询（嵌套查询）。
+子查询出现在这三个位置：where之后、from之后、select之后
+出现在where之后：      select  *  from  表1  where  字段1  =  (select  字段1  from 表2);   ---->(select  字段1  from 表2)是子查询
+例子：                         select  *  from  user  where  id  > (select  techerid  from teacher_user);
+
+分类：
+标量子查询：子查询结果为单个值（ 操作符为：=、<>、<、<=、>、>= ）
+select  *  from  表1  where  字段1  =  (select  字段1  from 表2);
+
+列子查询：子查询结果为一列（ 操作符为：in、not in、any、some、all )
+select  *  from  表1  where  字段1  >  all (select  字段1  from 表2 where ...	);
+
+行字查询：子查询结果为一行（ 操作符为：=、<>、in、not in ）
+select  *  from  表1  where  (字段1,字段2)  =  (select  字段1,字段2  from 表2  where 字段n=某值);
+
+表子查询：子查询结果为多行多列（ 操作符为：in ）
+select  *  from  表1  where  (字段1,字段2)  in  (select  字段1,字段2  from 表2  where 字段n<某值);
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 使用函数（实际使用时，参数为字段+其他）
@@ -148,4 +168,30 @@ update 表名  set 字段1=函数(参数);
 
 例子：
           select  name  datediff(curdate(),entrydate)  from  user;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+事务就是把多个sql语句进行封装成一个事务
+mysql的事务默认自动提交的
+方法1：
+设置mysql事务手动提交：
+                             select @@autocommit;
+                             set @@autocommit=0;
+提交事务：commit;
+回滚事务：rollback;
+
+方法2：
+开启事务：begin;
+提交事务：commit;
+回滚事务：rollback;
+
+例子： 
+              begin;        
+              update user set money = money -1000 where name = '张三';
+              rollback;
+              update user set money = money +1000 where name = '李四';
+              rollback;
+              commit;
+
+
+
 
