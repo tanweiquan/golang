@@ -1,0 +1,48 @@
+sql的优化
+1、插入优化：
+insert语句优化：
+            批量插入：insert  into  表名  values(字段1的值1，字段2的值2...);
+            手动事务提交：
+                            begin;
+                            insert  into  表名  values(字段1的值1，字段2的值2...);
+                            insert  into  表名  values(字段1的值1，字段2的值2...);
+                            。。。
+                            commit;
+            主键顺序插入：1,2,3,4,5,6...
+一次性插入大批量数据时，使用load：
+#客户端连接时，加上参数--local-infile
+mysql  --local-infile -u root -p
+#设置全局参数local_infile为1，开启从本地加载文件导入数据的开关
+local_infile=1;
+#执行load指令将准备好的数据，加载到表结构中
+load  data  local  infile  '要导入的文件路径'  into  table  `被导入的表名`  fields  terminated  by ',' lines  terminated by '\n';
+
+2、主键优化
+在innodb中，表数据都是根据主键顺序组织存放的，这种存储方式的表称为索引组织表--IOT
+优化：
+           降低主键的长度
+           插入数据时，尽量选择顺序插入，选择auto_increment来自增主键。否则会产生页分裂。
+           尽量不用UUID(通用唯一识别码)做主键或其他自然主键，如身份证号
+           业务操作时，避免对主键的修改。
+3、order by 优化
+创建联合索引时注意其顺序规则，同时避免回表查询
+create index  索引名称  on  表名(字段1 asc ,字段2  desc);
+4、group by 优化
+在分组操作时，可以通过索引来提高效率
+在分组操作时，索引的使用也是满足最左前缀法则的。
+5、limit 优化
+通过覆盖索引+子查询的方式来优化
+select  *  from  表名  表别名,(select id from 表名  order  by  id  limit  值1，值2) 子查询别名  where  表别名.id = 子查询别名.id;
+6、count 优化
+count 查询数据量（对应列或者整个表的总行数）
+innodb引擎执行count(*)时，需要一行一行地从引擎里读出来，然后累计，因此效率低。
+myisam引擎会把表的总行数存在磁盘中，因此执行count(*)时，会直接返回这个数，效率非常高。但有where条件时，不是读磁盘的数据，也要一行一行累计，效率也非常低。
+优化方法：自己计数（如使用redis，当插入一条数据时，redis加一，删除一条数据时，redis减一）
+count()是一个聚合函数，它会每行每行地判断，如果查询到的值不是null，就累加一，最后返回累计值。
+用法：count(*)、count(主键)、count(字段)、count(1)
+注意的是count(字段)中的字段是否有not null约束，有not null约束的，效率高，否则没有的效率就低。
+效率：count(*)~=count(1)>count(主键)>count(字段)，因此尽量使用count(*)
+7、update 语句优化
+在事务中，要避免行锁升级为表锁
+innodb的行锁是针对索引加的锁，不是针对记录加的锁，并且该索引不能失效，否则会从行锁升级为表锁。
+优化方法是给update语句加上索引，让update语句根据索引字段找到要修改的值
