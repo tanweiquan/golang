@@ -98,7 +98,7 @@ DQL：查
 注意：该语句执行时的顺序是从where开始执行，而select在分组条件后，排序前执行
 注意：模糊查询：select  字段列表 from  表名  where  字段  like '谭%';  ---->符号：_匹配单个字符，%匹配任意个字符
 
-例子：从user表中找到id大于6且按年龄分组后性别全为男的员工组，然后选择员工年龄升序排序，年龄相同的按id降序排序，然后再跳过20条数据后的前2条数据查询
+例子：从user表中找到id大于6且按年龄分组后性别全为男的员工组，然后选择员工年龄升序排序，年龄相同的按id降序排序，然后再跳过20条数据后的前2条数据查询（相当于查询第11页，每页2条数据）
           select  name from user where id>6 group by age having gender='男' order by age asc,id desc limit 20,2;
 
 	 设置字段别名：select  字段1  as 别名1，字段2  as 别名2  from  表名;
