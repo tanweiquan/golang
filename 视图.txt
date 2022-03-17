@@ -1,0 +1,41 @@
+视图：
+视图是虚拟存在的表，只保存查询的sql逻辑，不保存数据。
+向视图进行增删改操作都只会将数据保存到基表里，不会保存到视图中，也就是说，视图是查看查询结果的动态虚拟表！
+视图的作用：
+简单：经常查询可以被定义为视图，从而是用户不用为以后的操作指定全部条件 。
+安全：数据库可以授权，但不能授权到数据库特定行和特定列上，通过视图用户只能查询和修改他们进到的数据
+数据独立：视图可帮用户屏蔽表结构变化带来的影响。
+
+创建或修改：
+         create  or  replace  view  视图名称[(列名列表)]  as  select 语句 [with cascaded | local  check  option];
+查看创建视图的语句：
+                             show  create  view  视图名称;
+查看视图数据：select  *  from  视图名称  where....；
+修改视图：alter  view  视图名称[(列名列表)]  as  select语句;
+删除视图：drop  view  [if exists]  视图名称...；
+
+在where 条件限制后加 with cascaded | local  check  option，让增删改查收到条件限制（with check option默认是cascaded）
+在视图中进行增删改时，不受视图的条件列表限制，需要在创建视图时指定[with cascaded | local  check  option]才能让增删改受视图条件限制！
+
+如果V1->V2->V3，也就是V3依赖V2创建，V2依赖V1创建，那么有：V3继承V2、V1的条件限制，但注意的是：
+cascade：即使依赖的视图没有指定with  check  option，检测含有cascade的视图条件限制时，也会检测其所依赖视图的条件限制。
+local：只有依赖的视图指定了with  check  option，检测含有local的视图的条件限制时，才会检测其所依赖视图的条件限制；否则不检测其所依赖的视图
+
+视图的更新(增删改)：
+视图的行与基础表中的行必须存在一对一的关系。即视图的每一行都是基础表的子集。
+如果视图含有以下任意项，视图将不可更新：
+                       聚合函数或窗口函数、distint、group by、having、union 或者 union all
+
+例子：
+1、为了保证数据库表的安全性，开发人员在操作tb_user表时，只能看到用户的基本字段，屏蔽手机号和邮箱两个字段。
+create  view  tb_user_view  as  select  id,name,profession,age,gender,status,createtime  from tb_user;
+select  *  from  tb_user_view;
+2、查询每个学生所选修的课程（三表联查），这个功能能多企业在业务中都用到，为了简化操作，定义一个视图：
+create  view  tb_stu_course_view  as  select  s.name  student_name  c.name course_name  from  student  s, student_course sc, course c  where  s.id =sc.studentid  and  sc.courseid  = c.id;
+select  *  from  tb_stu_course_view;
+
+因此视图可以简化多表查询。
+
+
+
+
