@@ -105,7 +105,7 @@ DQL：查
       	 去除重复：select   distinct   字段列表  from  表名;
      	 条件查询：select  字段列表  from  表名  where  条件列表；
      	 统计表中列的值：select  聚合函数(字段列表)  from  表名;     
-注意：count为列中的总记录数、min/max分别为该列的值的最大值和最小值、avg为该列的值的平均值、sum为该列的值的和
+注意：count为该列的非null行数、min/max分别为该列的值的最大值和最小值、avg为该列的值的平均值、sum为该列的值的和
 例子：
         select  count  name  from  user;
         select  name  as  '人名'  from  user;
