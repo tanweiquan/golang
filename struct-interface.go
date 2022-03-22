@@ -2,7 +2,7 @@ package struct_interface
 
 import "fmt"
 
-// 封装：首字母大小写方式代表公有私有权限
+// 封装：对外公开接口，增强安全，简化编程。（首字母大小写方式代表公有私有权限）
 /*
 type 类型名 struct{
     字段名 字段类型
@@ -18,7 +18,7 @@ func (p *Person) Walk() {
 	fmt.Println(p.name)
 }
 
-// 继承：使用内嵌的方式，对结构体struct进行组合
+// 继承：子类继承父类，自动拥有父类的属性和方法。（使用内嵌的方式，对结构体struct进行组合）
 type Chinese struct {
 	p    Person
 	skin string
