@@ -1,0 +1,51 @@
+# 使用yaml来写配置文件
+# yaml格式的配置文件写法：
+# 注意冒号后要有空格
+# 键前面加空格表示层级关系
+# 值：
+# 双引号""：不会转义字符串里的特殊字符（如换行符等）
+# 单引号''：会转义字符串里的特殊字符
+
+# 键值对（对象、数组）：
+
+# 对象还是k:v模式
+# friends: 
+#   lastname: "张三"
+#   age: 20
+# 相当于：
+# friend: {lastname: "张三",age: 20} --->通过friend字段可以拿到friend字段，获得里面的全部k-v的数据
+# 数组
+# 用- 值表示数组中的一个元素
+# pets: 
+#   - cat
+#     name
+#   - dog
+#     name
+#   - pig
+#     name
+# 相当于：
+# pet: {[cat,name],[dog,name],[pig,name]} --->通过pet字段的切片拿到pet字段，获得里面的全部的数组/切片数据
+# 对象的子项可以是数组，数组的子项也可以是对象
+# person: 
+#   - pet: cat
+#     name: "霉霉"
+#   hostname: who
+
+---
+mysql:
+  host: "127.0.0.1"
+  port: "4399"
+  dbname: "数据库名"
+  user: "root"
+  password: "123456"
+
+redis: 
+  host: "127.0.0.1"
+  port: "4325"
+
+rpc:
+  - name: "rpc1"
+    port: "2000"
+  - name: "rpc2"
+    port: "2100"
+
