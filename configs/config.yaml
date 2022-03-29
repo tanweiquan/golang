@@ -1,4 +1,4 @@
-# 使用yaml来写配置文件
+# 使用yaml来写配置文件（.yaml和yml是同一种格式，但建议使用.yaml）
 # yaml格式的配置文件写法：
 # 注意冒号后要有空格
 # 键前面加空格表示层级关系
@@ -6,14 +6,31 @@
 # 双引号""：不会转义字符串里的特殊字符（如换行符等）
 # 单引号''：会转义字符串里的特殊字符
 
-# 键值对（对象、数组）：
+# 不同类型：
 
-# 对象还是k:v模式
+# 数字
+# environments:
+#   num: 22.11
+
+# 日期(yyyy/MM/dd HH:mm:ss)
+# environments:
+#   time: 2021/01/01 10:20:12
+
+# 集合set
+# environments:
+#   set: [set1,set2]
+
+# 字典map
+# environments:
+#   map: {key1: value1,key2: value2}
+
+# 对象（k:v模式）
 # friends: 
 #   lastname: "张三"
 #   age: 20
 # 相当于：
 # friend: {lastname: "张三",age: 20} --->通过friend字段可以拿到friend字段，获得里面的全部k-v的数据
+
 # 数组
 # 用- 值表示数组中的一个元素
 # pets: 
