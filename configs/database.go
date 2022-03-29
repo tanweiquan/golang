@@ -44,5 +44,7 @@ func main() {
 	fmt.Println(Data.Sql.Host)
 	fmt.Println(Data.Sql.Dbname)
 	fmt.Println(Data.Rpcok[0])
+	fmt.Println(Data.Rpcok[0].Name)
 	fmt.Println(Data.Rpcok[1])
+	fmt.Println(Data.Rpcok[1].Port)
 }
