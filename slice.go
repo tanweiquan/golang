@@ -45,9 +45,10 @@ func main() {
 	var s1 []int = arr[:]
 	var s2 []int = arr[0:6]
 
-	// 使用copy复制切片，表达式：copy(切片name,被复制的切片)
+	// 由于切片是引用类型，如单纯拷贝它的值，则使用copy复制切片，表达式：copy(切片name,被复制的切片)
 	m := make([]int, 6, 7)
-	copy(m, b)
+	copy(m, b) // 深拷贝：复制切片的值
+	s3 := s2   // 浅拷贝：复制切片的指针
 	// 切片的排序
 	var h1 = []int{1, 6, 9, 2, 3, 8}
 	sort.Ints(h1[:]) //对切片里的元素进行排序
@@ -58,5 +59,6 @@ func main() {
 	fmt.Println(ps)
 	fmt.Println(s1)
 	fmt.Println(s2)
+	fmt.Println(s3)
 	fmt.Println(m)
 }
