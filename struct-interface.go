@@ -1,4 +1,4 @@
-package struct_interface
+package main
 
 import "fmt"
 
@@ -70,17 +70,15 @@ func (a Russian) Eat() {
 	fmt.Println("俄罗斯人" + "吃" + "什么？")
 }
 
-func Tell() {
-	fmt.Println("好的")
-}
-
 // 当实现了Human接口的结构体就可以调用Tell函数了
-func Tellok(ren Human) {
-	ren.Tell()
+func Tell(ren Human) {
+	fmt.Println("好的", ren)
 }
 func Tellhao(who interface{}) {
-	who.(Human).Tell() // 断言，传进的任何类型只有是Human类型的才能实现Tell()函数
+	h := who.(Human) // 断言，传进的任何类型只有是Human类型的才能实现Tell()函数
+	Tell(h)
 }
+
 func main() {
 	// 这里就看出了多态的，不同的对象类型，调用相同方法，执行的是不同函数
 	a := &American{
@@ -103,4 +101,5 @@ func main() {
 	c = r
 	c.Speak()
 	c.Eat()
+	Tellhao(c)
 }
