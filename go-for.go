@@ -29,7 +29,7 @@ func main() {
 		a++
 		if a > 10 {
 			fmt.Println("循环退出")
-			break // 退出循环的方式有两种：break和goto lable
+			break // 退出循环的方式有两种：break或break lable(lable放在for代码块前)和goto lable(lable放在for代码块后)
 		} else {
 			continue // 继续循环
 		}
