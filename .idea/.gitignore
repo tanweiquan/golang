@@ -1,8 +1,8 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-# Datasource local storage ignored files
-/../../../../:\桌面\golang\.idea/dataSources/
-/dataSources.local.xml
-# 基于编辑器的 HTTP 客户端请求
-/httpRequests/
+#忽略的上传文件信息
+#忽略扩展名.exe的文件
+*.exe
+#忽略.idea目录下的所有文件
+.idea/
+#忽略扩展名.gitignore的文件
+*.gitignore
+#忽略没用的文件
